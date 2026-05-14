@@ -56,3 +56,20 @@
     font-weight: 400;
     font-style: normal;
 }
+
+
+
+
+
+/* starbucks page */
+.starbucks {
+    background-color: #00643C;
+    text-align: center;
+}
+
+
+/* dunkin page */
+.dunkin {
+    background-color: #EE4699;
+    text-align: center;
+}

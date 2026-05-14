@@ -24,3 +24,5 @@
 //     document.getElementById('info-flower').textContent = stateData[selected].flower;
 //     document.getElementById('info-tree').textContent = stateData[selected].tree;
 // }
+
+
