@@ -215,37 +215,52 @@ const dunkin = [
 ];
 
 document.addEventListener("DOMContentLoaded", () => {
-  const starbucksCards = document.getElementById("starbucksCards");
-  const dunkinCards = document.getElementById("dunkinCards");
-  const searchInput = document.getElementById("searchInput");
-  const sortSelect = document.getElementById("sortSelect");
-    displayItems([...starbucks, ...dunkin]);
+  const starbucksCards = document.getElementById("displayDiv");
 
-function displayItems(items) {
-    const cards = document.getElementById("cards");
-    cards.innerHTML = "";
-    items.forEach(item => {
-        const card = document.createElement("div");
-        card.classList.add("card");
-        card.innerHTML = `
-            <div class="cards">
-                <img src="${item.photo}" alt="${item.name}">
-                <h3>Name: ${item.name}</h3>
-                <p>Type: ${item.type}</p>
-                <p>Temperature: ${item.temp}</p>
-                <p>Calories: ${item.calories}</p>
-            </div>
-        `;
-        cards.appendChild(card);
-    }
+  function render(items) {
+    starbucksCards.innerHTML = "";
+    items.forEach((item, index) => {
+      const card = document.createElement("div");
+      card.className = "card col-4 mb-4"; // column on direct row child
+      card.innerHTML = `
+  <div id="card${index}" class="card-body align-items-center">
+    <h3>Name: ${item.name}</h3>
+    <img src="${item.pic}" alt="${item.name}">
+    <p id="type${index}">Type: ${item.type}</p>
+    <p id="temp${index}">Temperature: ${item.temp}</p>
+    <p>Calories: ${item.calories}</p>
+  </div>
+`;
+
+      starbucksCards.appendChild(card);
+
+      if (item.temp === "Hot") {
+        document.getElementById(`temp${index}`).style.color = "red";
+      } else if (item.temp === "Cold") {
+        document.getElementById(`temp${index}`).style.color = "blue";
+      } else if (item.temp === "Warm") {
+        document.getElementById(`temp${index}`).style.color = "orange";
+      }
+      ;
+
+      if (item.type === "Coffee") {
+        card.style.border = "2px solid brown";
+      } else if (item.type === "Refresher") {
+        card.style.border = "2px solid pink";
+      } else if (item.type === "Food") {
+        card.style.border = "2px solid orange";
+      }
+    });
+  }
+
+  function filterItems() {
+    const searchInput = document
+      .getElementById("searchInput")
+      .value.toLowerCase();
+    const filteredStarbucks = starbucks.filter((item) =>
+      item.name.toLowerCase().includes(searchInput),
     );
-};
-
-function filterItems() {
-    const searchInput = document.getElementById("searchInput").value.toLowerCase();
-    const filteredStarbucks = starbucks.filter(item => item.name.toLowerCase().includes(searchInput));
-    const filteredDunkin = dunkin.filter(item => item.name.toLowerCase().includes(searchInput));
-    displayItems([...filteredStarbucks, ...filteredDunkin]);
-};
-
+    render(filteredStarbucks);
+  }
+  render(starbucks);
 });
